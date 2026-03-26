@@ -1,0 +1,17 @@
+import { test, expect } from '@playwright/test';
+
+test('Мартинов Максим: Тестування пошуку на TMDB', async ({ page }) => {
+    test.setTimeout(60000);
+  await page.goto('https://www.themoviedb.org/');
+
+  const searchById = page.locator('#inner_search_v4');
+  const searchByRole = page.getByRole('textbox').first();
+  const searchByAttr = page.locator('input[name="query"]');
+
+  await expect(searchById).toBeVisible();
+  await expect(searchByRole).toBeVisible();
+
+  await searchById.fill('Inception');
+  await page.screenshot({ path: 'custom_screenshot.png' });
+  await searchById.press('Enter');
+});

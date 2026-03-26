@@ -1,0 +1,73 @@
+import { test, expect } from '@playwright/test';
+
+test('Мартинов Максим: Взаємодія з елементами форми та використання бібліотеки локаторів', async ({ page }) => {
+    test.setTimeout(60000);
+
+    const locators = {
+        practiceFormsLink: page.locator('a[href="/forms"]'),
+        practiceFormLink: page.locator('a[href="/automation-practice-form"]'),
+
+        form: page.locator('form#userForm'),
+        
+        firstNameInput: page.locator('#firstName'),
+        lastNameInput: page.locator('#lastName'),
+        userEmailInput: page.locator('#userEmail'),
+        
+        genderRadioMale: page.locator('label[for="gender-radio-1"]'),
+        genderRadioFemale: page.locator('label[for="gender-radio-2"]'),
+        genderRadioOther: page.locator('label[for="gender-radio-3"]'),
+        
+        userNumberInput: page.locator('#userNumber'),
+        
+        dateOfBirthInput: page.locator('#dateOfBirthInput'),
+        
+        subjectsInput: page.locator('#subjectsInput'),
+        
+        hobbiesCheckboxSports: page.locator('label[for="hobbies-checkbox-1"]'),
+        hobbiesCheckboxReading: page.locator('label[for="hobbies-checkbox-2"]'),
+        hobbiesCheckboxMusic: page.locator('label[for="hobbies-checkbox-3"]'),
+        
+        uploadPictureInput: page.locator('#uploadPicture'),
+        
+        currentAddressTextarea: page.locator('#currentAddress'),
+        
+        stateDropdownWrapper: page.locator('#state'),
+        stateDropdownInput: page.locator('#state input'),
+        cityDropdownWrapper: page.locator('#city'),
+        cityDropdownInput: page.locator('#city input'),
+        
+        submitButton: page.locator('#submit')
+    };
+
+    await page.goto('https://demoqa.com/');
+    await locators.practiceFormsLink.click();
+    await locators.practiceFormLink.click();
+
+    for (const element of Object.values(locators)) {
+        if (element === locators.practiceFormsLink || element === locators.practiceFormLink) continue;
+        await expect(element).toBeAttached();
+    }
+    await locators.firstNameInput.fill('Максим');
+    await locators.lastNameInput.fill('Мартинов');
+    await locators.userEmailInput.fill('test@test.com');
+    await locators.userNumberInput.fill('0123456789');
+
+    await page.locator('#gender-radio-1').check({ force: true }); 
+    await page.locator('#hobbies-checkbox-1').check({ force: true }); 
+    await page.locator('#hobbies-checkbox-2').check({ force: true }); 
+
+    await locators.subjectsInput.fill('Math');
+    await locators.subjectsInput.press('Enter');
+
+
+    await locators.stateDropdownWrapper.click({ force: true });
+    await locators.stateDropdownInput.fill('NCR');
+    await locators.stateDropdownInput.press('Enter');
+    
+    await locators.cityDropdownWrapper.click({ force: true });
+    await locators.cityDropdownInput.fill('Delhi');
+    await locators.cityDropdownInput.press('Enter');
+
+
+    await locators.submitButton.click({ force: true });
+});

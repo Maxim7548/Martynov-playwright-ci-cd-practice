@@ -1,0 +1,12 @@
+import { test, expect } from '@playwright/test';
+import { MyFormPage } from '../pages/MyFormPage';
+
+test('Мартинов Максим test ', async ({ page }) => {
+  test.setTimeout(60000);
+
+  const loginPage = new MyFormPage(page);
+
+  await loginPage.goto();
+  await loginPage.login('maksym_test_wrong_user', 'SuperPassword123');
+  await expect(loginPage.errorMessage.first()).toBeVisible({ timeout: 15000 });
+});
