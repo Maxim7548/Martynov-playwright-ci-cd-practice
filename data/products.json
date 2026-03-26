@@ -18,10 +18,5 @@
     "id": 4,
     "title": "Red Lipstick",
     "expectedPrice": 12.99
-  },
-  {
-    "id": 9999,
-    "title": "Error Product",
-    "expectedPrice": 0
   }
 ]
